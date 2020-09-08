@@ -12,21 +12,21 @@ import { Sort } from '@angular/material/sort';
 export class AppComponent implements AfterViewInit {
 
   ELEMENT_DATA: PeriodicElement[] = [
-    {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-    {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-    {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-    {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-    {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-    {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-    {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-    {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-    {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-    {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-    {position: 11, name: 'Boron', weight: 20.2809, symbol: 'Br'}
+    {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H', status: 'active'},
+    {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He', status: 'active'},
+    {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li', status: 'active'},
+    {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be', status: 'active'},
+    {position: 5, name: 'Boron', weight: 10.811, symbol: 'B', status: 'active'},
+    {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C', status: 'active'},
+    {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N', status: 'active'},
+    {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O', status: 'active'},
+    {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F', status: 'active'},
+    {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne', status: 'active'},
+    {position: 11, name: 'Boron', weight: 20.2809, symbol: 'Br', status: 'active'}
     ];
 
   title = 'test-table';
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'action'];
+  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'status', 'action',];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   sortedData: PeriodicElement[] = this.ELEMENT_DATA;
   dataSource = new MatTableDataSource<PeriodicElement>(this.sortedData);
@@ -61,8 +61,13 @@ export class AppComponent implements AfterViewInit {
     return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
   }
 
-  onEdit(el: PeriodicElement) {
-    console.log(el);
+  onChangeStatus(el: PeriodicElement) {
+    const isActive = el.status === 'active';
+    if (isActive){
+      el.status = 'inactive';
+    } else {
+      el.status = 'active';
+    }
   }
 
   ngAfterViewInit(): void {
@@ -80,7 +85,8 @@ export class AppComponent implements AfterViewInit {
         name: 'Prince',
         position: 0,
         weight: 50.900,
-        symbol: 'P'
+        symbol: 'P',
+        status: 'active'
       });
       this.sortedData = this.ELEMENT_DATA;
       this.dataSource = new MatTableDataSource<PeriodicElement>(this.sortedData.slice());
@@ -94,6 +100,7 @@ export interface PeriodicElement {
   position: number;
   weight: number;
   symbol: string;
+  status: string;
 }
 
 
